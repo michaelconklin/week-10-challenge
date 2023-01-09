@@ -2,11 +2,11 @@ const inquirer = require("inquirer");
 
 const { writeFile } = require('fs').promises;
 
-const promptUser = () => {
+const promptUser = (data) => {
     return inquirer.prompt([
         {
             type: 'input',
-            name: 'name',
+            name: 'names',
             message: 'What is your name?',
         },
         {
@@ -26,36 +26,45 @@ const promptUser = () => {
         },
         {
             type: 'input',
-            name: 'github',
-            message: 'What is your github username?',
+            name: 'school',
+            message: 'Where did you go to school?',
         },
     ]);
 };
 
-const generateHTML = ({ name, position, email, github }) =>
-    `<!DOCTYPE html>
+function generateHTML(data) {
+    return`
+    
+    <!DOCTYPE html>
     <html lang="en">
     <head>
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Document</title>
+      <link rel="stylesheet" href="./Develop/dist/style.css">
     </head>
     <body>
-      <header class="p-5 mb-4 header bg-light">
-        <div class="container">
-          <h1 class="display-4">My name is ${name}</h1>
-          <p class="lead">my position is ${position}.</p>
-          <h3>Example heading <span class="badge bg-secondary">Contact Me</span></h3>
-          <ul class="list-group">
-            <li class="list-group-item">My ID number is ${id}</li>
-            <li class="list-group-item">My email is ${email}</li>
-            <li class="list-group-item">My GitHub username is ${github}</li>
-          </ul>
+    <header>
+    <h1> My Team </h1>
+    </header>
+
+    <div class="container">
+        <div class="card">
+        <p>${data.names}</p>
+        <div class="information">
+            <ul>
+                <li>ID: ${data.id}</li>
+                <li>
+                Email:
+                <a href="mailto: ${data.email}"> ${data.email}</a>
+                </li>
+                <li>School: ${data.school}</li>
+            </ul>
         </div>
-      </header>
-    </body>
-    </html>`;
+        </div>
+    </html>`
+};
 
     const init = () => {
         promptUser()
